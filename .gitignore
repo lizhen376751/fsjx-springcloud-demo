@@ -1,0 +1,28 @@
+/*/target/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+/lizhen-shop-common/target/
+/lizhen-shop-common/lizhen-shop-common.iml
+/lizhen-shop-api/lizhen-shop-api-member/target/
+/out/
+/*.iml
+
+lizhen-shop-api/lizhen-shop-api-member/src/test/
+lizhen-shop-common/src/test/
+lizhen-shop-eurekaserver/src/test/
+lizhen-shop-member/src/test/
+lizhen-shop-message/src/test/
+
+
