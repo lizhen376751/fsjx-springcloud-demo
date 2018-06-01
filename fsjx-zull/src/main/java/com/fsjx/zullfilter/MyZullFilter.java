@@ -1,6 +1,7 @@
 package com.fsjx.zullfilter;
 
 import com.netflix.zuul.ZuulFilter;
+import com.netflix.zuul.ZuulFilterResult;
 import com.netflix.zuul.context.RequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,13 +17,13 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class MyZullFilter extends ZuulFilter {
     private static final Logger log = LoggerFactory.getLogger(MyZullFilter.class);
-    //pre：路由之前
+    //pre：前置过滤器
     @Override
     public String filterType() {
         return "pre";
     }
 
-    //filterOrder：过滤的顺序
+    //filterOrder：过滤的顺序,过滤顺序，数字越大级别越低
     @Override
     public int filterOrder() {
         return 0;
