@@ -27,7 +27,6 @@ public class UserEntity {
         private String phone;
         @ApiModelProperty(value = "邮箱",example = "724577807@qq.com")
         private String email;
-        private Date created;
 
         @Override
         public String toString() {
@@ -37,7 +36,6 @@ public class UserEntity {
                         ", password='" + password + '\'' +
                         ", phone='" + phone + '\'' +
                         ", email='" + email + '\'' +
-                        ", created=" + created +
                         ", updated=" + updated +
                         '}';
         }
@@ -82,13 +80,6 @@ public class UserEntity {
                 this.email = email;
         }
 
-        public Date getCreated() {
-                return created;
-        }
-
-        public void setCreated(Date created) {
-                this.created = created;
-        }
 
         public Date getUpdated() {
                 return updated;

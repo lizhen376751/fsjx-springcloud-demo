@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * Created by lizhen on 2018\5\29 0029.
  */
 public interface UserService {
+    /**
+     * 查寻用户信息
+     * @param userEntity 用户实体类
+     * @return 响应数据
+     */
     @RequestMapping("/user/getUserEntity")
-    public ResponseBase getUserEntity(@RequestBody UserEntity userEntity);
+    ResponseBase getUserEntity(@RequestBody UserEntity userEntity);
 }

@@ -19,9 +19,9 @@ public class SwaggerConfig {
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("com.fsjx.controller"))
-                .paths(PathSelectors.any())
+                .select() // 选择那些路径和api会生成document
+                .apis(RequestHandlerSelectors.basePackage("com.fsjx.controller")) // 对所有api进行监控
+                .paths(PathSelectors.any()) // 对所有路径进行监控
                 .build();
     }
 

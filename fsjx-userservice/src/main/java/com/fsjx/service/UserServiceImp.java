@@ -3,6 +3,7 @@ package com.fsjx.service;
 
 import com.fsjx.base.BaseApiService;
 import com.fsjx.base.ResponseBase;
+import com.fsjx.mapper.UserServiceMap;
 import com.fsjx.user.entity.UserEntity;
 import com.fsjx.user.service.UserService;
 import io.swagger.annotations.Api;
@@ -25,6 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserServiceImp implements UserService {
     @Autowired
     private BaseApiService baseApiService;
+    @Autowired
+    private UserServiceMap userServiceMap;
 
 
     @ApiOperation(value = "获取用户信息接口", notes = "根据User对象创建用户")
@@ -33,10 +36,7 @@ public class UserServiceImp implements UserService {
             @ApiImplicitParam(paramType = "query", name = "token", value = "令牌（测试）", dataType = "String", required = true,defaultValue = "token")})
     @PostMapping("/getUserEntity")
     public ResponseBase getUserEntity(@RequestBody UserEntity userEntity) {
-        userEntity.setId(1);
-        userEntity.setUsername(userEntity.getUsername());
-        userEntity.setPassword("md5");
-        userEntity.setPhone("18560042032");
-        return baseApiService.setSuccessResponseBase(userEntity);
+        UserEntity byID = userServiceMap.findByID(userEntity.getId());
+        return baseApiService.setSuccessResponseBase(byID);
     }
 }

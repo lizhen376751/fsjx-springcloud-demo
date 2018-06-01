@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>fsjx-api-user</module>
+        <module>fsjx-api-web</module>
     </modules>
 
     <dependencies>
