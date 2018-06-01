@@ -1,112 +1,35 @@
-###springcloud.demo
-
-####.项目结构
-
-#####1.父项目-fsjxspringclouddemo
->#####主要对pom进行了配置，将公共的依赖加载进来（比如spring boot parent）
-
-#####2.注册中心模块-fsjx-eureka
->#####起到服务注册与发现的作用
-配置eureka地址和端口号，启动服务
-
-#####3.接口中心模块-fsjx-api
->#####所有的服务需要首先设计接口，每一个服务在fsjx-api又是单独的一个模块
-创建一个用户服务接口的子模块
-
-######3.1接口中心子模块-fsjx-api-user
->######用户服务接口（只有单纯的一个查询接口）
-
-#####4.服务实现模块-fsjx-userservice
->#####对fsjx-api-user的具体实现
-
-#####5.服务调用模块-fsjx-web
->#####主要是展示与用户交互的页面，以及对user服务的调用
-
-#####6.公共组件模块-fsjx-common
->#####共公部分都存放在模块，例如响应数据封装，日志打印。
-
-#####7.接口网关模块-fsjx-zull
->#####路由转发与过滤
-
->#####8.涉及其他功能：接口文档swagger，断路器hystrix
-
-
-
-
+# fsjx springcloud.demo文档说明
 
 # QuickStart
-基于SpringCloud体系实现，简单购物流程实现，满足基本功能：注册、登录、商品列表展示、商品详情展示、订单创建、详情查看、订单支付、库存更新等等。
 
-每个业务服务采用独立的MYSQL数据库，初期考虑用到如下组件：
-1. 服务注册、发现: eureka
-2. 配置管理:spring config , spring security
-3. 集群容错: hystrix
-4. API网关: zuul
-5. 服务负载:feign+ribbon
-6. api文档输出:swagger2
-7. 代码简化:lombok
-8. 消息队列:rabbitmq
-9. 分布式锁: redis （待实现）
-10. 链路跟踪:spring cloud sletuh ->zipkin
-11. 安全认证:oauth2/JWT(通过JWT轻量级的实现)
-12. 服务监控:spring-boot-admin
+基于SpringCloud体系实现，简单实现查询用户的demo，满足基本功能。
+初期考虑用到如下组件：
+1.服务注册、发现: eureka
+2.断路器: hystrix
+3.API网关: zuul
+4.服务负载:feign+ribbon
+5.api文档输出:swagger2
 
 
 # 各模块介绍
 
-| 模块名称        | 端口   |  简介  |
-| --------   | -----:  | :----:  |
-| admin-server      | 9002   |   服务监控中心，监控所有服务模块    |
-| conf-server        |   9004   |   分布式配置中心，结合spring-security/rabbitmq同时使用   |
-| eureka-server        |    9003    |  服务注册中心，提供服务注册、发现功能  |
-| sleuth-server        |    9001    |  SpringCloud实现的一种分布式追踪解决方案，兼容Zipkin  |
-| zuul-server        |    9005    |  API网关模块  |
-| account-service        |    8080    |  用户服务，提供注册、登录、地址等服务  |
-| product-service       |    8081    |  商品服务，提供商品列表、详情、库存更新等服务  |
-| payment-service    |    8082    |  支付服务，支付记录  |
-| order-service        |    8083    |  订单服务，提供订单创建、详情、状态变更  |
-| msg-service        |    8084    |  消息处理服务  |
-| front-app        |    8088    |  前端服务，结合swagger2提供API管理(有小问题，swagger页面无法点击单个接口，可通过展开功能打开，待解决)  |
-
+| 模块名称        | 端口    |  简介   |
+| --------        | -----:  | :----:  |
+|fsjx-eureka      |	 9000	|  服务注册中心，提供服务注册、发现功能
+|fsjx-zull	      |  9003	|  API网关模块
+|fsjx-api	      |  无	    |  提供服务接口，无具体实现
+|fsjx-common      |	 无 	|  基础组件
+|fsjx-userservice |	 9001	|  用户服务接口具体实现
+|fsjx-web	      |  9002	|  服务调用，以及页面展示
 
 # 快速上手
-- 1、先启动admin-server,eureka-server,conf-server三个基础服务
-- 2、再依次启动payment/order/product/account基础业务服务
-- 3、最后启动front-app服务，打开浏览器，输入http://localhost:8088/swagger-ui.html ，根据流程API依次可使用功能[swagger主界面存在bug，不能选择某个api展开收缩，可通过全部展开/收缩的形式使用]
-- 4、后续有时间再提供页面，基于VUE2+BOOTSTRAP，将流程串起来
 
-# 相关测试
-	1、启动基础eureka/config两个服务后，直接启动front-app服务，通过swagger测试商品列表或详情功能来测试hystrix的功能
-	1.1、启动hystrix-dashboard服务，输入监控地址http://localhost:8088/hystrix.stream可以查看监控视图
-	2、输入http://localhost:9005/account-service/acc/login?phone=123123&password=123123查看返回结果
+- 1、先启动fsjx-eureka/fsjx-zull基础服务
+- 2、再启动fsjx-userservice/fsjx-web基础业务服务
+- 3、输入http://localhost:9003/swagger-ui.html ，根据API文档可使用功能
 
-## Release Version
-### v2.11
-
-> Release Date : 2017-10-02
-- 1，针对api增加jwt安全防护【过滤需要验权的URI，校验jwt】
-- 2，完善zuul过滤，完成基本代理路由、安全验证功能【但未引入到front-app中，下版中完善】
-
-### v2.1
-
-> Release Date : 2017-08-29
-- 1、引入swagger2，完成API接口文档管理完成整体业务数据流程流转
-- 2、通过API接口完成整体业务数据
-- 3、基于Spring-cloud-config引入配置中心，结合security加强安全配置，同时引入bus-amqp(rabbitmq)高效更新配置内容[配置中心数据结合sc-cloud-repo工程使用]
-- 4、引入feign，满足客户端调用服务端的服务
-- 5、引入ribbon，可以满足客户端的负载均衡调用后端服务
-
-### v1.0
-
-> Release Date : 2017-08-17
-- 1、完成基本服务及业务子模块服务的搭建 ，业务子模块可正常运行
-- 2、完成SpringBootAdmin业务模块的运行监控，及Eureka服务运行，满足各业务基础服务的注册、发现功能
-- 3、可通过Front-app端，借助Feign组件发起login/signup等功能的 简单测试运行。
-- 下一版本，将基于此版本之上，继续完善完整的购物实现，包括简单的页面、api管理/调用等等。
-
-
-# 关注更多内容
-![image](https://github.com/backkoms/simplemall/blob/develop/getqrcode.jpeg?raw=true)
+# 源码地址
+![image](https://github.com/lizhen376751/fsjx-springcloud-demo.git)
 
 
 
