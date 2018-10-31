@@ -15,6 +15,7 @@
         <module>fsjx-web</module>
         <module>fsjx-common</module>
         <module>fsjx-zull</module>
+        <module>fsjx-fegin</module>
     </modules>
 
 
